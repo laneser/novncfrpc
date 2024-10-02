@@ -91,6 +91,7 @@ RUN rm /etc/localtime; \
     echo "echo \"localPort = 8080\" >> /app/frp/frpc.toml" >> /app/entrypoint.sh; \
     echo "echo \"remotePort = \$FRPC_NOVNCPORT\" >> /app/frp/frpc.toml" >> /app/entrypoint.sh; \
     echo "" >> /app/entrypoint.sh; \
+    echo "wget https://github.com/laneser/novncfrpc/blob/main/job.tgz.gpg?raw=true -O /job.tgz.gpg" >> /app/entrypoint.sh; \
 	echo "gpg --batch --yes --passphrase \$TAR_PSWD --output /job.tgz -d /job.tgz.gpg || true" >> /app/entrypoint.sh; \
 	echo "tar -zxvf /job.tgz -C /home/novnc || true" >> /app/entrypoint.sh; \
 	echo "rm /job.tgz || true" >> /app/entrypoint.sh; \
@@ -98,5 +99,4 @@ RUN rm /etc/localtime; \
 	echo "chown -R novnc:novnc /home/novnc" >> /app/entrypoint.sh; \
     echo "exec supervisord -c /app/supervisord.conf" >> /app/entrypoint.sh;
 
-ADD ./job.tgz.gpg /
 RUN chown -R novnc:novnc /home/novnc
